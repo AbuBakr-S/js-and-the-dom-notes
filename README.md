@@ -16,7 +16,7 @@ If a variable is declared using let or const inside a block of code (denoted by 
 
 Variables declared with let and const are only available within the block they're declared.
 
-## Example
+## Example: Variable scope
 What do you expect to be the output from running `getClothing(false)`?
 ```
 function getClothing(isCold) {
@@ -35,3 +35,55 @@ let and const also have some other interesting properties.
 
 - Variables declared with let can be reassigned, but can’t be redeclared in the same scope.
 - Variables declared with const must be assigned an initial value, but can’t be redeclared in the same scope, and can’t be reassigned.
+
+
+
+
+# Destructuring
+Destructuring borrows inspiration from languages like Perl and Python by allowing you to specify the elements you want to extract from an array or object on the left side of an assignment.
+
+## Example: Destructuring values from an array
+```
+const point = [10, 25, -34];
+const [x, y, z] = point;
+console.log(x, y, z);
+```
+Console: `10 25 -34`
+
+TIP: You can also ignore values when destructuring arrays. For example, const [x, , z] = point; ignores the y coordinate and discards it.
+
+## Example: Destructuring values from an object
+```
+const gemstone = {
+  type: 'quartz',
+  color: 'rose',
+  carat: 21.29
+};
+
+const {type, color, carat} = gemstone;
+
+console.log(type, color, carat);
+```
+Console: `quartz rose 21.29`
+
+## Example: Losing access to (.this) property when destructuring
+
+What do you expect to be returned from calling getArea()?
+
+```
+const circle = {
+  radius: 10,
+  color: 'orange',
+  getArea: function() {
+    return Math.PI * this.radius * this.radius;
+  },
+  getCircumference: function() {
+    return 2 * Math.PI * this.radius;
+  }
+};
+
+let {radius, getArea, getCircumference} = circle;
+```
+
+Calling getArea() will return NaN. When you destructure the object and store the getArea() method into the getArea variable, it no longer has access to this in the circle object which results in an area that is NaN.
+
