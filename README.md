@@ -67,7 +67,6 @@ console.log(type, color, carat);
 Console: `quartz rose 21.29`
 
 ## Example: Losing access to (.this) property when destructuring
-
 What do you expect to be returned from calling getArea()?
 
 ```
@@ -86,4 +85,26 @@ let {radius, getArea, getCircumference} = circle;
 ```
 
 Calling getArea() will return NaN. When you destructure the object and store the getArea() method into the getArea variable, it no longer has access to this in the circle object which results in an area that is NaN.
+
+# Object Literal Shorthand
+
+## Example: Object Literal
+```
+let type = 'quartz';
+let color = 'rose';
+let carat = 21.29;
+
+let gemstone = {type, color, carat};
+```
+
+## Example: Method Name
+```
+let gemstone = {
+  type,
+  color,
+  carat,
+  calculateWorth() { ... }
+};
+```
+
 
