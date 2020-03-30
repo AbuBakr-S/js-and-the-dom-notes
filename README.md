@@ -107,4 +107,20 @@ let gemstone = {
 };
 ```
 
+# Loops
+
+There are several loops you can use, each with their limitations:
+- for loop
+- for...in loop
+- Most recently, for...of loop
+
+## Strengths
+- Loop over any type of data that is iterable, (meaning it follows the [iterable protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols))
+- By default, this includes the data types String, Array, Map, and Set.
+— Objects are not iterable, by default.
+
+## Weaknesses
+- Tracking the counter
+- Tracking the exit condition
+- The forEach loop is limited to Arrays
 
