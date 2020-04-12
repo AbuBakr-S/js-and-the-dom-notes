@@ -4,43 +4,40 @@ Learning material for JavaScript.
 # Variables
 
 ## Hoisting
-- Hoisting is a result of how JavaScript is interpreted by your browser. Essentially, before any JavaScript code is executed, all variables declared with var are "hoisted", which means they're raised to the top of the function scope.
+- Hoisting is a result of how JavaScript is interpreted by your browser. Essentially, before any JavaScript code is executed, all variables declared with var are "hoisted", which means they're **raised to the top of the function scope.**
 - This is bad practice.
 
 ## let and const
-- Variables declared with let and const are scoped to the block, not to the function. 
-- With var, variables were either scoped globally or locally to an entire function scope.
+- Variables declared with `let` and `const` are **scoped to the block**, not to the function. 
+- With `var`, variables were either **scoped globally or locally to an entire function scope.**
 - Use const as it's safer unless you need to reassign.
 
 If a variable is declared using let or const inside a block of code (denoted by curly braces { }), then the variable is stuck in what is known as the **temporal dead zone** until the variable’s declaration is processed. This behavior prevents variables from being accessed only until after they’ve been declared.
 
-Variables declared with let and const are only available within the block they're declared.
+Variables declared with `let` and `const` are **only available within the block they're declared.**
 
 ## Example: Variable scope
 What do you expect to be the output from running `getClothing(false)`?
 ```
 function getClothing(isCold) {
   if (isCold) {
-    const freezing = 'Grab a jacket!';
+    const freezing = 'Grab a jacket!';    // Temporal Dead Zone
   } else {
     const hot = 'It’s a shorts kind of day.';
     console.log(freezing);
   }
 }
 ```
-Console: `ReferenceError: freezing is not defined`
+**Console:** `ReferenceError: freezing is not defined`
 
 ## Rules for using let and const
-let and const also have some other interesting properties.
+`let` and `const` also have some other interesting properties.
 
-- Variables declared with let can be reassigned, but can’t be redeclared in the same scope.
-- Variables declared with const must be assigned an initial value, but can’t be redeclared in the same scope, and can’t be reassigned.
+- Variables declared with `let` can be **reassigned**, but can’t be **redeclared** in the same scope.
+- Variables declared with `const` must be **assigned an initial value**, but can’t be **redeclared in the same scope**, and can’t be **reassigned**.
 
-
-
-
-# Destructuring
-Destructuring borrows inspiration from languages like Perl and Python by allowing you to specify the elements you want to extract from an array or object on the left side of an assignment.
+# Destructuring - Extracting
+Destructuring borrows inspiration from languages like Perl and Python by allowing you to **specify the elements you want to extract** from an array or object on the left side of an assignment.
 
 ## Example: Destructuring values from an array
 ```
@@ -48,9 +45,9 @@ const point = [10, 25, -34];
 const [x, y, z] = point;
 console.log(x, y, z);
 ```
-Console: `10 25 -34`
+**Console:** `10 25 -34`
 
-TIP: You can also ignore values when destructuring arrays. For example, const [x, , z] = point; ignores the y coordinate and discards it.
+*TIP: You can also ignore values when destructuring arrays. For example, `const [x, , z] = point;` ignores the y coordinate and discards it.*
 
 ## Example: Destructuring values from an object
 ```
@@ -64,7 +61,7 @@ const {type, color, carat} = gemstone;
 
 console.log(type, color, carat);
 ```
-Console: `quartz rose 21.29`
+**Console:** `quartz rose 21.29`
 
 ## Example: Losing access to (.this) property when destructuring
 What do you expect to be returned from calling getArea()?
@@ -84,7 +81,7 @@ const circle = {
 let {radius, getArea, getCircumference} = circle;
 ```
 
-Calling getArea() will return NaN. When you destructure the object and store the getArea() method into the getArea variable, it no longer has access to this in the circle object which results in an area that is NaN.
+Calling `getArea()` will return `NaN`. When you destructure the object and store the `getArea()` method into the getArea variable, it **no longer has access to `this` in the circle object** which results in an area that is `NaN`.
 
 # Object Literal Shorthand
 
@@ -103,7 +100,7 @@ let gemstone = {
   type,
   color,
   carat,
-  calculateWorth() { ... }
+  calculateWorth() { ... }    // Drop the function keyword
 };
 ```
 
@@ -122,6 +119,11 @@ for (let i = 0; i < digits.length; i++) {
 }
 ```
 
+Key points about this loop:
+- Tracking the Counter
+- Tracking the Exit Condition
+- Using an Index to Access Values
+
 ## Example of Loops - `for...in`
 ```
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -131,7 +133,15 @@ for (const index in digits) {
 }
 ```
 
+Key points about this loop:
+- No longer Tracking the Counter
+- No longer Watching the Exit Condition
+- Using an Index to Access Values
+- Can get you into trouble when adding methods to an array / object because this loops over all enumerable properties.
+
 ## Example of Loops - `for...of`
+This is used to loop over any type of data that is iterable.
+
 ```
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -140,22 +150,19 @@ for (const digit of digits) {
 }
 ```
 
-**TIP:** It’s good practice to use plural names for objects that are collections of values. That way, when you loop over the collection, you can use the singular version of the name when referencing individual values in the collection. For example, `for (const button of buttons) {...}`.
-
-## Strengths
-### `for...of` Loop
+Key points about this loop:
+- Most Concise
+- No longer Tracking the Counter
+- No longer Watching the Exit Condition
+- No longer using an Index to Access Values
+- Can Stop or Break a for...of loop at anytime
 - Loop over any type of data that is iterable, (meaning it follows the [iterable protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols))
-- By default, this includes the data types String, Array, Map, and Set.
-- You can stop or break a for...of loop at anytime.
+- By default, this includes the data types String, Array, Map, and Set
 
+
+**TIP:** It’s good practice to use plural names for objects that are collections of values. That way, when you loop over the collection, you can use the singular version of the name when referencing individual values in the collection. For example, `for (const button of buttons) {...}`
 
 **Note:** Objects are not iterable, by default.
-
-## Weaknesses (general)
-- Tracking the counter
-- Tracking the exit condition
-- The forEach loop is limited to Arrays
-- The `for...in` loop loops over all enumerable properties. This means if you add any additional properties to the array's prototype, then those properties will also appear in the loop.
 
 ## Example of Loops - Using Break
 
@@ -169,9 +176,10 @@ for (const digit of digits) {
   console.log(digit);
 }
 ```
+**Console:** 1 3 5 7 9
 
 # Spread operator
-The spread operator, written with three consecutive dots ( ... ), is new in ES6 and gives you the ability to expand, or spread, iterable objects into multiple elements.
+The spread operator, written with three consecutive dots ( ... ), is new in ES6 and gives you the ability to **expand, or spread, iterable objects into multiple elements.**
 
 ```
 /*
@@ -187,7 +195,7 @@ console.log(produce);
 ```
 
 # Rest parameter
-The rest parameter, ( ... ), allows you to represent an indefinite number of elements as an array. 
+The rest parameter, ( ... ), allows you to **represent an indefinite number of elements as an array.**
 
 When assigning the values of an array to variables:
 ```
@@ -199,11 +207,11 @@ Prints: 20.17 18.67 1.5 ["cheese", "eggs", "milk", "bread"]
 ```
 
 ## Rest Parameter in Variadic functions
-Another use case for the rest parameter is when you’re working with variadic functions. Variadic functions are functions that take an indefinite number of arguments.
+Another use case for the rest parameter is when you’re working with variadic functions. Variadic functions are functions that **take an indefinite number of arguments.**
 
 Fortunately, with the addition of the rest parameter, you can rewrite the sum() function to read more clearly.
 
-For example, let’s say we have a function called sum() which calculates the sum of an indefinite amount of numbers. How might the sum() function be called during execution?
+For example, let’s say we have a function called sum() which calculates the sum of an indefinite amount of numbers. How might the `sum()` function be called during execution?
 
 ```
 function sum(...nums) {
