@@ -169,3 +169,66 @@ for (const digit of digits) {
   console.log(digit);
 }
 ```
+
+# Spread operator
+The spread operator, written with three consecutive dots ( ... ), is new in ES6 and gives you the ability to expand, or spread, iterable objects into multiple elements.
+
+```
+/*
+Instructions: Use the spread operator to combine the `fruits` and `vegetables` arrays into the `produce` array.
+*/
+
+const fruits = ["apples", "bananas", "pears"];
+const vegetables = ["corn", "potatoes", "carrots"];
+
+const produce = [...fruits, ...vegetables];
+
+console.log(produce);
+```
+
+# Rest parameter
+The rest parameter, ( ... ), allows you to represent an indefinite number of elements as an array. 
+
+When assigning the values of an array to variables:
+```
+const order = [20.17, 18.67, 1.50, "cheese", "eggs", "milk", "bread"];
+const [total, subtotal, tax, ...items] = order;
+console.log(total, subtotal, tax, items);
+
+Prints: 20.17 18.67 1.5 ["cheese", "eggs", "milk", "bread"]
+```
+
+## Rest Parameter in Variadic functions
+Another use case for the rest parameter is when you’re working with variadic functions. Variadic functions are functions that take an indefinite number of arguments.
+
+Fortunately, with the addition of the rest parameter, you can rewrite the sum() function to read more clearly.
+
+For example, let’s say we have a function called sum() which calculates the sum of an indefinite amount of numbers. How might the sum() function be called during execution?
+
+```
+function sum(...nums) {
+  let total = 0;  
+  for(const num of nums) {
+    total += num;
+  }
+  return total;
+}
+```
+
+## Example of a Variadic Function Using Rest Parameter
+```
+function average(...nums) {
+  let total = 0;
+  for (const num of nums) {
+    total += num;
+  }
+  return total === 0 ? 0 : total / nums.length;
+}
+
+console.log(average(2, 6));
+console.log(average(2, 3, 3, 5, 7, 10));
+console.log(average(7, 1432, 12, 13, 100));
+console.log(average());
+```
+
+
