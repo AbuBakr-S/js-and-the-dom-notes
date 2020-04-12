@@ -113,13 +113,59 @@ There are several loops you can use, each with their limitations:
 - `for...in` loop
 - Most recently, `for...of` loop
 
+## Examples of Loops - `for loop`
+```
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+for (let i = 0; i < digits.length; i++) {
+  console.log(digits[i]);
+}
+```
+
+## Example of Loops - `for...in`
+```
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+for (const index in digits) {
+  console.log(digits[index]);
+}
+```
+
+## Example of Loops - `for...of`
+```
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+for (const digit of digits) {
+  console.log(digit);
+}
+```
+
+**TIP:** It’s good practice to use plural names for objects that are collections of values. That way, when you loop over the collection, you can use the singular version of the name when referencing individual values in the collection. For example, `for (const button of buttons) {...}`.
+
 ## Strengths
+### `for...of` Loop
 - Loop over any type of data that is iterable, (meaning it follows the [iterable protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols))
 - By default, this includes the data types String, Array, Map, and Set.
-— Objects are not iterable, by default.
+- You can stop or break a for...of loop at anytime.
 
-## Weaknesses
+
+**Note:** Objects are not iterable, by default.
+
+## Weaknesses (general)
 - Tracking the counter
 - Tracking the exit condition
 - The forEach loop is limited to Arrays
+- The `for...in` loop loops over all enumerable properties. This means if you add any additional properties to the array's prototype, then those properties will also appear in the loop.
 
+## Example of Loops - Using Break
+
+```
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+for (const digit of digits) {
+  if (digit % 2 === 0) {
+    continue;
+  }
+  console.log(digit);
+}
+```
