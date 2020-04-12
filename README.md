@@ -108,7 +108,6 @@ let gemstone = {
 ```
 
 # Loops
-
 There are several loops you can use, each with their limitations:
 - `for loop`
 - `for...in` loop
