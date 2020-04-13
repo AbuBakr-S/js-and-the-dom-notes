@@ -239,4 +239,50 @@ console.log(average(7, 1432, 12, 13, 100));
 console.log(average());
 ```
 
+# The DOM
+The DOM stands for "Document Object Model" and is a **tree-like structure** that is a **representation of the HTML document**, the **relationship between elements**, and contains the **content and properties** of the **elements**.
+
+## The DOM is not:
+- Part of the JavaScript language
+
+## The DOM is:
+- Constructed from the browser
+- Globally accessible by JavaScript code using the `document` object
+
+## Browser:
+1.  HTML is received
+2.  HTML tags are converted to tokens
+  - DOCTYPE
+  - start tag
+  - end tag
+  - comment
+  - character
+  - end-of-file
+3.  Tokens are converted to Nodes
+4.  Nodes are converted to the DOM
+
+## Select Page Elements
+
+### Select Indivudual Element
+- document.getElementById()
+  - Returns an Element
+
+### Select Multiple Elements
+- document.getElementsByClassName()
+  - Returns a HTML Collection
+- document.getElementsByTagName()
+
+## Node vs node
+`Node` = Class
+  - Blueprint / Interface (properties and methods)
+  
+`node` = Object
+  - The real Objects built from the Blueprints
+ 
+### Key Terms
+**Note:** *Our use of "interface" is not related to either a UI or a GUI. Our use of `interface` is a technical, computer science word for a **list of properties and methods that are inherited**.*
+
+- interface = blueprint
+- properties = data
+- methods = functionality
 
