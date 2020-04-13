@@ -279,10 +279,40 @@ The DOM stands for "Document Object Model" and is a **tree-like structure** that
 `node` = Object
   - The real Objects built from the Blueprints
  
-### Key Terms
+### Key Terms:
 **Note:** *Our use of "interface" is not related to either a UI or a GUI. Our use of `interface` is a technical, computer science word for a **list of properties and methods that are inherited**.*
 
 - interface = blueprint
 - properties = data
 - methods = functionality
+
+## Nodes, Elements and Interfaces
+Each Interface has it's own set of Properties and Methods which can be inherited.
+
+### Node Interface
+#### Event Target  <--Node
+[Node Interface](https://developer.mozilla.org/en-US/docs/Web/API/Node)
+
+You can use the `Node.nodeType` Property to return the type of the node. 
+
+#### Example values:
+Name	|  Value
+ELEMENT_NODE	1
+ATTRIBUTE_NODE 	2
+TEXT_NODE	3
+
+### Element Interface
+#### Event Target  <--Node  <--Element
+`Element` Interface is a blueprint for creating elements: [Element Interface](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+
+### Key Points:
+- The `Element` Interface is a descendant of the Node Interface.
+- `Element` Interface inherits all of the Node Interface's properties and methods.
+
+### HTML Elements Interface
+#### Event Target  <--Node  <--Element <--HTMLElement 
+
+The `HTMLElement` interface represents any HTML element. Some elements directly implement this interface, while others implement it via an interface that inherits it. See [here](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement).
+
+To check out all of the different interfaces, check here: [Web API Interfaces](https://developer.mozilla.org/en-US/docs/Web/API).
 
