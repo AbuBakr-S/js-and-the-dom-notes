@@ -400,4 +400,54 @@ We also learned about the following helpful properties:
 - `.firstElementChild`: Will always return the first element
 - `.parentElement`
 
+### Style Page Content
 
+#### Adding Multiple Styles at Once
+`HTMLElement.style`
+
+##### Example - `.style.property`: One at a time
+```
+const mainHeading = document.querySelector('h1');
+
+mainHeading.style.color = 'blue';
+mainHeading.style.backgroundColor = 'orange';
+mainHeading.style.fontSize = '3.5em';
+```
+
+##### Example - `.style.cssText`: Multiple
+```
+const mainHeading = document.querySelector('h1');
+mainHeading.style.cssText = 'color: blue; background-color: orange; font-size: 3.5em';
+```
+
+#### Setting An Element's Attributes
+`Element.setAttribute(name, value)`
+
+Sets the value of an attribute on the specified element. If the attribute already exists, the value is updated; otherwise a new attribute is added with the specified name and value.
+
+#### Accessing an Element's Classes
+`Element.classList`: returns a **live DOMTokenList collection** of the class attributes of the element. This can then be used to manipulate the class list.
+
+Using classList is a convenient alternative to accessing an element's list of classes as a space-delimited string via `element.className.`
+
+1. HTML
+`<h1 id="main-heading" class="ank-student jpk-modal">Learn Web Development at Udacity</h1>`
+
+2. Retrieve Class List
+```
+const mainHeading = document.querySelector('#main-heading');
+
+// store the list of classes in a variable
+const listOfClasses = mainHeading.classList;
+
+// logs out ["ank-student", "jpk-modal"]
+console.log(listOfClasses);
+```
+
+A `DOMTokenList` representing the contents of the element's class attribute. If the class attribute is not set or empty, it returns an empty DOMTokenList, i.e. a DOMTokenList with the length property equal to 0.
+
+The `.classList` property has a number of properties of its own. Some of the most popularly used ones are:
+- `.add()` - to add a class to the list
+- `.remove()` - to remove a class from the list
+- `.toggle()` - to add the class if it doesn't exists or remove it from the list if it does already exist
+- `.contains()` - returns a boolean based on if the class exists in the list or not
