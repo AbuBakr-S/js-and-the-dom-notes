@@ -302,6 +302,11 @@ ATTRIBUTE_NODE 	2
 TEXT_NODE	3
 
 ### Element Interface
+- Event Target
+- Node
+- Document
+- Element
+
 #### Event Target  <--Node  <--Element
 `Element` Interface is a blueprint for creating elements: [Element Interface](https://developer.mozilla.org/en-US/docs/Web/API/Element)
 
@@ -324,3 +329,59 @@ To check out all of the different interfaces, check here: [Web API Interfaces](h
 - `Element.outerHTML`: get / set the HTML element itself, as well as its children
 - `Node.textContent`: get / set the text content of an element and all its descendants
 - `HTML.innerText`: Represents the "rendered" text (processes CSS) content of a node and its descendants. As a getter, it approximates the text the user would get if they highlighted the contents of the element with the cursor and then copied it to the clipboard.
+
+### Add New Page Content
+#### Methods:
+- `document.createElement()`
+- `document.createTextNode()`
+- `Node.appendChild(childNode)`
+
+#### Insert HTML (Last Child) - `.appendChild()`
+  - Must be called on another Element.
+  - Adds the specified childNode argument as the last child to the current node. (Add an element to the page)
+  - If an element already exists in the DOM and this element is passed to `.appendChild()`, the `.appendChild()` method will move it rather than duplicating it
+
+#### Example - `.appendChild()`
+```
+const mainHeading = document.querySelector('#main-heading');
+const otherHeading = document.querySelector('#other-heading');
+const excitedText = document.createElement('span');
+
+excitedText.textContent = '!!!';
+mainHeading.appendChild(excitedText);
+otherHeading.appendChild(excitedText);  // '!!!' will move here.
+```
+
+- It **MUST** be the **LAST CHILD**
+- The `.appendChild()` method will move an element from its current position to the new position.
+
+#### Insert HTML (Elsewhere) - `element.insertAdjacentHTML(position, text)`
+The .insertAdjacentHTML() method has to be called with two arguments:
+1. The location of the HTML
+2. The HTML text that is going to be inserted
+
+The first argument to this method will let us insert the new HTML in one of four different locations
+- `beforebegin` – inserts the HTML text as a previous sibling
+- `afterbegin` – inserts the HTML text as the first child
+- `beforeend` – inserts the HTML text as the last child
+- `afterend` – inserts the HTML text as a following sibling
+
+A visual example works best, and MDN's documentation has a fantastic example that I'll modify slightly:
+```
+<!-- beforebegin -->
+<p>
+    <!-- afterbegin -->
+    Existing text/HTML content
+    <!-- beforeend -->
+</p>
+<!-- afterend -->
+```
+
+#### Example - `.insertAdjacentHTML()`
+```
+const mainHeading = document.querySelector('#main-heading');
+const htmlTextToAdd = '<h2>Skydiving is fun!</h2>';
+
+mainHeading.insertAdjacentHTML('afterend', htmlTextToAdd);
+```
+
