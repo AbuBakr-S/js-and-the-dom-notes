@@ -385,3 +385,19 @@ const htmlTextToAdd = '<h2>Skydiving is fun!</h2>';
 mainHeading.insertAdjacentHTML('afterend', htmlTextToAdd);
 ```
 
+### Remove Page Content
+- `Node.removeChild()`:  **Must be called on the parent** 
+- `ChildNode.remove()`: Called **directly on the element to delete.**
+
+#### Example - Remove
+```
+const mainHeading = document.querySelector('h1');
+mainHeading.remove();
+```
+
+We also learned about the following helpful properties:
+- `.firstChild`: Might return whitespace (if there is any)
+- `.firstElementChild`: Will always return the first element
+- `.parentElement`
+
+
