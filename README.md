@@ -316,3 +316,11 @@ The `HTMLElement` interface represents any HTML element. Some elements directly 
 
 To check out all of the different interfaces, check here: [Web API Interfaces](https://developer.mozilla.org/en-US/docs/Web/API).
 
+## Creating Content with JavaScript
+
+### Update Existing Page Content
+#### Properties:
+- `Element.innerHTML`: get / set an element's (and all of its descendants!) HTML content
+- `Element.outerHTML`: get / set the HTML element itself, as well as its children
+- `Node.textContent`: get / set the text content of an element and all its descendants
+- `HTML.innerText`: Represents the "rendered" text (processes CSS) content of a node and its descendants. As a getter, it approximates the text the user would get if they highlighted the contents of the element with the cursor and then copied it to the clipboard.
