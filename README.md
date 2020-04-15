@@ -619,6 +619,11 @@ document.body.appendChild(myCustomDiv);
 However, we've lost access to the individual paragraphs.
 
 ### Event Delegation
+Event Delegation is the process of delegating to a parent element the ability to manage events for child elements. We are able to do this by making use of:
+
+- the event object and its .target property
+- the different phases of an event
+
 1. a paragraph element is clicked
 2. the event goes through the capturing phase
 3. it reaches the target
@@ -647,3 +652,55 @@ document.body.appendChild(myCustomDiv);
 myCustomDiv.addEventListener('click', respondToTheClick);
 ```
 
+#### Checking the Node Type in Event Delegation
+- The above works perfectly as the `<p>` tags are direct children of `<div>`
+- However there is nothing to ensure that it was actually a <p> tag that was clicked
+- We can use `Node.nodeName` to verify the Node Type is as expected
+  
+##### Example of More Complex HTML with Nested Nodes    
+```
+<article id="content">
+  <p>Brownie lollipop <span>carrot cake</span> gummies lemon drops sweet roll dessert tiramisu. Pudding muffin <span>cotton candy</span> croissant fruitcake tootsie roll. Jelly jujubes brownie. Marshmallow jujubes topping sugar plum jelly jujubes chocolate.</p>
+
+  <p>Tart bonbon soufflé gummi bears. Donut marshmallow <span>gingerbread cupcake</span> macaroon jujubes muffin. Soufflé candy caramels tootsie roll powder sweet roll brownie <span>apple pie</span> gummies. Fruitcake danish chocolate tootsie roll macaroon.</p>
+</article>
+```
+
+##### Example of an Unsuccessful Event listener
+```
+document.querySelector('#content').addEventListener('click', function (evt) {
+    console.log('A span was clicked with text ' + evt.target.textContent);
+});
+```
+
+##### Example of a Successful Event Listener - Using `.nodeName`
+```
+document.querySelector('#content').addEventListener('click', function (evt) {
+    if (evt.target.nodeName === 'SPAN') {  // ← verifies target is desired element
+        console.log('A span was clicked with text ' + evt.target.textContent);
+    }
+});
+```
+
+Remember that every element inherits properties from the Node Interface. One of the properties of the Node Interface that is inherited is .nodeName. We can use this property to verify that the target element is actually the element we're looking for. When a <span> element is clicked, it will have a .nodeName property of "SPAN", so the check will pass and the message will be logged. However, if a <p> element is clicked, it will have a .nodeName property of "P", so the check will fail and the message will not be logged.
+  
+#### The nodeName's Capitalization
+The `.nodeName` property will return a capital string, not a lowercase one. So when you perform your check make sure to either:
+- check for capital letters
+- convert the .nodeName to lowercase
+
+##### CAPS
+```
+// check using capital letters
+if (evt.target.nodeName === 'SPAN') {
+    console.log('A span was clicked with text ' + evt.target.textContent);
+}
+```
+
+##### Lowercase:
+```
+// convert nodeName to lowercase
+if (evt.target.nodeName.toLowerCase() === 'span') {
+    console.log('A span was clicked with text ' + evt.target.textContent);
+}
+```
