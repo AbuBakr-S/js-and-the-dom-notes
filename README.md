@@ -451,3 +451,87 @@ The `.classList` property has a number of properties of its own. Some of the mos
 - `.remove()` - to remove a class from the list
 - `.toggle()` - to add the class if it doesn't exists or remove it from the list if it does already exist
 - `.contains()` - returns a boolean based on if the class exists in the list or not
+
+## Working with Browser Events
+The Chrome browser has a special `monitorEvents()` and `unmonitorEvents()` function that will let us see different events as they are occurring. This should be used for developmental/testing purposed only.
+See [Monitor Events](https://developers.google.com/web/tools/chrome-devtools/console/events#monitor_events)
+
+```
+// start displaying all events on the document object
+monitorEvents(document);
+
+// turn off the displaying of all events on the document object.
+unmonitorEvents(document);
+```
+
+### The Event Target
+The `EventTarget` page says that `EventTarget`:
+- is an interface implemented by objects that can receive events and may have listeners for them.
+- `Element`, `document`, and `window` are the most common event targets, but other objects can be event targets too…
+
+Each of the following is an "event target":
+- the document object
+- a paragraph element
+- a video element
+- etc.
+
+The EventTarget Interface doesn't have any properties and only three methods! These methods are:
+- `.addEventListener()`
+- `.removeEventListener()`
+- `.dispatchEvent()`
+
+#### addEventListener
+**Syntax:** `target.addEventListener(type, listener [, options])`
+
+##### So an event listener needs three things:
+1. An event target - this is called the target
+2. The type of event to listen for - this is called the type
+3. A function to run when the event occurs - this is called the listener
+
+##### Example Use of an Event Listener:
+```
+const mainHeading = document.querySelector('h1');
+
+mainHeading.addEventListener('click', function () {
+  console.log('The heading was clicked!');
+});
+```
+See [list of Events](https://developer.mozilla.org/en-US/docs/Web/Events)
+
+#### removeEventListener
+**Syntax:** `target.removeEventListener(type, listener[, options])`
+
+The listener function must be the exact same function as the one used in the .addEventListener() call...not just an identical looking function.
+
+#### Example Add/Remove Event Listener
+This code will **SUCCESSFULLY** add and then remove an event listener:
+```
+function myEventListeningFunction() {
+    console.log('howdy');
+}
+
+// adds a listener for clicks, to run the `myEventListeningFunction` function
+document.addEventListener('click', myEventListeningFunction);
+
+// immediately removes the click listener that should run the `myEventListeningFunction` function
+document.removeEventListener('click', myEventListeningFunction);
+```
+
+This cose will UNSUCCESSFULLY add and then remove an event listener:
+```
+// adds a listener for clicks, to run the `myEventListeningFunction` function
+document.addEventListener('click', function myEventListeningFunction() {
+    console.log('howdy');
+});
+
+// immediately removes the click listener that should run the `myEventListeningFunction` function
+document.removeEventListener('click', function myEventListeningFunction() {
+    console.log('howdy');
+});
+```
+
+This code does not successfully remove the event listener. Again, why does this not work?
+
+1. both `.addEventListener()` and .removeEventListener have the same target
+2. both `.addEventListener()` and .removeEventListener have the same type
+3. `.addEventListener()` and `.removeEventListener` have their own distinct listener functions...they do not refer to the exact same function (this is the reason the event listener removal fails!)
