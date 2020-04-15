@@ -566,6 +566,29 @@ document.addEventListener('click', function () {
 }, true);
 ```
 
+### The Event Object
+When an event occurs, the browser includes an `event object`. This is just a regular JavaScript object that includes a ton of information about the event itself. The `.addEventListener()`'s listener function receives a notification (an object that implements the Event interface) when an event of the specified type occurs.
 
+Let's add a parameter so we can store this important information:
+```
+document.addEventListener('click', function (event) {  // ← the `event` parameter is new!
+   console.log('The document was clicked');
+});
+```
+
+Notice the new event parameter that's been added to the listener function. Now when the listener function is called, it is able to store the event data that's passed to it!
+
+### Default Action and Preventing
+
+#### Example using `Event.preventDefault()`:
+```
+const links = document.querySelectorAll('a');
+const thirdLink = links[2];
+
+thirdLink.addEventListener('click', function (event) {
+    event.preventDefault();
+    console.log("Look, ma! We didn't navigate to a new page!");
+});
+```
 
 
