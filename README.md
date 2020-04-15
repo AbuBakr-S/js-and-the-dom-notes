@@ -535,3 +535,31 @@ This code does not successfully remove the event listener. Again, why does this 
 1. both `.addEventListener()` and .removeEventListener have the same target
 2. both `.addEventListener()` and .removeEventListener have the same type
 3. `.addEventListener()` and `.removeEventListener` have their own distinct listener functions...they do not refer to the exact same function (this is the reason the event listener removal fails!)
+
+### Event Phases
+There are three different phases during the lifecycle of an event. They are:
+1. the capturing phase
+2. the at target phase
+3. and the bubbling phase
+
+Most Event Handlers run during the Target Phase (e.g. attaching a click handler to a button).
+Bubbling is useful for lists (e.g. one click handler bubbles up from each `<li>` element to the `<ul>`).
+Capturing, on the other hand, lets the parent intercept an event before it reaches a child (e.g. `<ul>` before `<li>`).
+
+By default, when `.addEventListener()` is called with only two arguments, the method defaults to using the bubbling phase.
+
+The code below uses `.addEventListener()` with only **two arguments**, so it will **invoke the listener during the bubbling phase:**
+```
+document.addEventListener('click', function () {
+   console.log('The document was clicked');
+});
+```
+
+However, in this code, `.addEventListener()` is called with **three arguments** with the **third argument being true** (meaning it should invoke the listener earlier, during the **capturing phase!**).
+
+```
+document.addEventListener('click', function () {
+   console.log('The document was clicked');
+}, true);
+```
+
