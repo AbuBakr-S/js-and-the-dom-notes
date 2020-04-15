@@ -591,4 +591,59 @@ thirdLink.addEventListener('click', function (event) {
 });
 ```
 
+### Avoid Too Many Events
+- Separate functions from loops (Single Function).
+- Append Element inside the loop, with each iteration, to a Variable stored outside.
+- Add Event Listener to the Variable (Single Event Listener).
+- Append the Variable to the Document
+
+```
+const myCustomDiv = document.createElement('div');
+
+function respondToTheClick() {
+    console.log('A paragraph was clicked.');
+}
+
+for (let i = 1; i <= 200; i++) {
+    const newElement = document.createElement('p');
+    newElement.textContent = 'This is paragraph number ' + i;
+
+    myCustomDiv.appendChild(newElement);
+}
+
+myCustomDiv.addEventListener('click', respondToTheClick);
+
+document.body.appendChild(myCustomDiv);
+```
+
+However, we've lost access to the individual paragraphs.
+
+### Event Delegation
+1. a paragraph element is clicked
+2. the event goes through the capturing phase
+3. it reaches the target
+4. it switches to the bubbling phase and starts going up the DOM tree
+5. when it hits the `<div>` element, it runs the listener function
+6. inside the listener function, `event.target` is the element that was clicked
+
+So `event.target` gives us direct access to the paragraph element that was clicked. Because we have access to the element directly, we can access its .textContent, modify its styles, update the classes it has - we can do anything we want to it!
+
+```
+const myCustomDiv = document.createElement('div');
+
+function respondToTheClick(evt) {
+    console.log('A paragraph was clicked: ' + evt.target.textContent);
+}
+
+for (let i = 1; i <= 200; i++) {
+    const newElement = document.createElement('p');
+    newElement.textContent = 'This is paragraph number ' + i;
+
+    myCustomDiv.appendChild(newElement);
+}
+
+document.body.appendChild(myCustomDiv);
+
+myCustomDiv.addEventListener('click', respondToTheClick);
+```
 
