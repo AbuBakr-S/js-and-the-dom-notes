@@ -542,13 +542,15 @@ There are three different phases during the lifecycle of an event. They are:
 2. the at target phase
 3. and the bubbling phase
 
-Most Event Handlers run during the Target Phase (e.g. attaching a click handler to a button).
-Bubbling is useful for lists (e.g. one click handler bubbles up from each `<li>` element to the `<ul>`).
-Capturing, on the other hand, lets the parent intercept an event before it reaches a child (e.g. `<ul>` before `<li>`).
+- Most Event Handlers run during the Target Phase.
+- Bubbling is useful for lists (e.g. one click handler bubbles up from each `<li>` element to the `<ul>`, `<body>` back up to `<html>`).
+- Capturing, on the other hand, lets the parent intercept an event before it reaches a child (e.g. `<html>`, `<body>` then firing at `<ul>` before it reaches `<li>` where it changes to `Target Phase` before bubbling back up the chain).
 
 By default, when `.addEventListener()` is called with only two arguments, the method defaults to using the bubbling phase.
 
 The code below uses `.addEventListener()` with only **two arguments**, so it will **invoke the listener during the bubbling phase:**
+
+#### Example - Event Handler Fires During Bubbling Phase
 ```
 document.addEventListener('click', function () {
    console.log('The document was clicked');
@@ -557,9 +559,13 @@ document.addEventListener('click', function () {
 
 However, in this code, `.addEventListener()` is called with **three arguments** with the **third argument being true** (meaning it should invoke the listener earlier, during the **capturing phase!**).
 
+#### Example - Event Handler Fires During Capturing Phase
 ```
 document.addEventListener('click', function () {
    console.log('The document was clicked');
 }, true);
 ```
+
+
+
 
