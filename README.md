@@ -849,3 +849,34 @@ console.log('ice cream is tasty'); // 3
 - Asynchrnous code, such as `addEventListener()` ans `setTimeOut()` is passed from the Call Stack to the Browser
 - This is then passed to the Event Queue, while the Call Stack is busy
 
+
+### Running Code Later - `setTimeout()`
+The `setTimeout()` function takes:
+- A function to run at some later time
+- The number of milliseconds the code should wait before running the function
+
+#### Example Usage
+```
+setTimeout(function sayHi() {
+    console.log('Howdy');
+}, 1000);
+```
+
+If we ran this code, the string 'Howdy' would appear in the console in about 1,000 milliseconds or in just about 1 second.
+
+Since `setTimeout()` is an API provided by the browser, the call to `setTimeout()` gives the `sayHi()` function over to the browser which it starts a timer. After the timer is finished, the `sayHi()` function moves to the Queue. If the Call Stack is empty, then the `sayHi()` function is moved to the Call Stack and executed.
+
+##### Example of Passing `setTimeout()` a Delay of 0 Milliseconds.
+An interesting aspect to `setTimeout()` is that we can pass it a delay of 0 milliseconds.
+```
+setTimeout(function sayHi() {
+    console.log('Howdy');
+}, 0);  // ← 0 milliseconds!
+```
+
+##### Break up long running code to allow the browser to better handle user interactions
+- A delay of 0 milliseconds will not run immidiately
+- The `sayHi()` function will go through the JS Event Loop
+- The function is handed off to the Browser where the browser starts a timer for 0 milliseconds
+- Since the timer ends immediately, the `sayHi()` function will move to the **Queue**, and then to the **Call Stack** once the Call Stack has **finished executing any currently-running tasks.**
+
