@@ -704,3 +704,36 @@ if (evt.target.nodeName.toLowerCase() === 'span') {
     console.log('A span was clicked with text ' + evt.target.textContent);
 }
 ```
+
+### Know When the DOM is Ready
+
+#### The DOM is Built Incrementally
+When the HTML is received and converted into tokens and built into the document object model, is that this is a sequential process. When the parser gets to a `<script>` tag, it must **wait to download the script file and execute that JavaScript code.** This is the important part and the key to why the placement of the JavaScript file matters!
+
+##### Example of Calling a Node in JS that hasn't been Parsed by the DOM
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <script>
+    document.querySelector('footer').style.backgroundColor = 'purple';  // This will return null
+  </script>
+```
+
+- This is like running: `null.style.backgroundColor = 'purple';`
+- `null` doesn't have a .style property, so thus our error is born.
+
+##### There are two solutions to this:
+1. Well, if the DOM is built sequentially and the JavaScript code is moved to the very bottom of the page, then by the time the JavaScript code is run, all DOM elements will already exist!
+2. 
+However, an alternative solution would be to use **browser events!**
+
+### The Content Is Loaded Event
+When the document object model has been fully loaded, the browser will fire an event. This event is called the `DOMContentLoaded` event, and we can listen for it the same way we listen to any other events:
+
+```
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('the DOM is ready to be interacted with!');
+});
+```
