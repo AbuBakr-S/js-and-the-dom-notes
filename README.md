@@ -761,4 +761,42 @@ JavaScript code in the `<head>` will run before JavaScript code in the `<body>`,
 **Tip:**
 If you're looking at somebody else's code, you may see that their code listens for the load event being used instead (e.g. `document.onload(...))`. load fires later than `DOMContentLoaded` -- load waits until all of the images, stylesheets, etc. have been loaded (everything referenced by the HTML.) 
 
+## Performance 
 
+### Add Page Content Efficiently
+
+#### Testing Code Performance - `performance.now()`
+The standard way to measure how long it takes code to run is by using `performance.now()`. `performance.now()` returns a timestamp that is measured in milliseconds, so it's extremely accurate. How accurate? Here's what the its documentation page says: *accurate to five thousandths of a millisecond (5 microseconds)*
+
+The browser's `performance.now()` method starts measuring from the time the page loaded.
+
+Usage of `performance.now()`:
+1. Use performance.now() to get the an initial start time for the code
+2. Run the code you want to test
+3. Execute performance.now() to get another time measurement
+4. Subtract the initial time from the final time
+
+#### Using a Document Fragment
+- Creating an extaneous `<div>` elemeent just to hold all `<p>` tags is wasteful.
+- The browser is constantly working to make the screen match the DOM. When we add a new element, the browser has to run through a reflow calculation (to determine the new screen layout) and then repaint the screen. This takes time.
+
+##### A DocumentFragment:
+- Represents a minimal document object that has **no parent**. It is used as a lightweight version of Document that stores a segment of a document structure comprised of nodes just like a standard document.
+- As the DocFrag is not part of the active DOM, changes made to the fragment don't affect the document, cause reflow, or incur any performance impact that can occur when changes are made.
+
+We can use the `.createDocumentFragment()` method to create an empty `DocumentFragment` object. 
+
+`const myDocFrag = document.createDocumentFragment();`
+
+##### Example Useage of A Document Fragment
+```
+const myDocFrag = document.createDocumentFragment(); 
+
+for (let i = 1; i <= 200; i++){
+    const newEl = document.createElement('p');
+    newEl.textContent = "This is paragraph number " + i;
+    myDocFrag.appendChild(newEl);
+}
+```
+
+document.body.appendChild(myDocFrag);
