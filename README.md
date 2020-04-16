@@ -710,6 +710,7 @@ if (evt.target.nodeName.toLowerCase() === 'span') {
 #### The DOM is Built Incrementally
 When the HTML is received and converted into tokens and built into the document object model, is that this is a sequential process. When the parser gets to a `<script>` tag, it must **wait to download the script file and execute that JavaScript code.** This is the important part and the key to why the placement of the JavaScript file matters!
 
+#### Issues with JS Code in the `<head>`
 ##### Example of Calling a Node in JS that hasn't been Parsed by the DOM
 ```
 <!DOCTYPE html>
@@ -729,7 +730,7 @@ When the HTML is received and converted into tokens and built into the document 
 2. 
 However, an alternative solution would be to use **browser events!**
 
-### The Content Is Loaded Event
+### The Content Is Loaded Event - `DOMContentLoaded`
 When the document object model has been fully loaded, the browser will fire an event. This event is called the `DOMContentLoaded` event, and we can listen for it the same way we listen to any other events:
 
 ```
@@ -737,3 +738,27 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('the DOM is ready to be interacted with!');
 });
 ```
+
+#### Resolving Issues with JS Code in the `<head>`
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          document.querySelector('footer').style.backgroundColor = 'purple';
+      });
+    </script>
+```
+
+**Tip:**
+Even though this works, it's best to move the code to the bottom of the HTML file just before the closing `</body>` tag.
+
+**Tip:**
+JavaScript code in the `<head>` will run before JavaScript code in the `<body>`, so if you do have JavaScript code that needs to run as soon as possible, then you could put that code in the <head> and wrap it in a DOMContentLoaded event listener. This way it will run as early as possible, but not too early that the DOM isn't ready for it.
+
+**Tip:**
+If you're looking at somebody else's code, you may see that their code listens for the load event being used instead (e.g. `document.onload(...))`. load fires later than `DOMContentLoaded` -- load waits until all of the images, stylesheets, etc. have been loaded (everything referenced by the HTML.) 
+
+
