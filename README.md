@@ -815,7 +815,7 @@ For example, if you **add a CSS class** to an element, the browser often recalcu
 - **Hide, Change All, Show** is a good pattern to follow
 
 ### The Call Stack
-#### Single Threading
+#### Single Threading / Synchronous / Run-to-Completion
 - JavaScript can "process" one command at a time
 - Run to completion nature
 - All of the code in the function gets executed
@@ -824,7 +824,28 @@ For example, if you **add a CSS class** to an element, the browser often recalcu
 #### The Call Stack
 JavaScript keeps track of what functions are running by using the Call Stack.
 
+### The Event Loop
+If some JavaScript is running, let it run until it is finished ("run-to-completion"). If no JavaScript is running, run any pending event handlers.
 
+Pick up the next event, run its handler, and repeat.
 
+There are three parts you have to think about around the event loop:
+- The Call Stack
+- Web APIs/the browser
+- Event Queue
 
+**IMPORTANT:** The key things to remember here are 1) current synchronous code runs to completion, and 2) events are processed when the browser isn't busy. Asynchronous code (such as loading an image) runs outside of this loop and sends an event when it is done.
+
+#### Example of how The Call Stack, Web APIs/Browser and the Event Queue work together.
+```
+console.log('howdy'); // 1
+document.addEventListener('click', // 2
+  function numbers() {
+    console.log('123');
+});
+console.log('ice cream is tasty'); // 3
+```
+
+- Asynchrnous code, such as `addEventListener()` ans `setTimeOut()` is passed from the Call Stack to the Browser
+- This is then passed to the Event Queue, while the Call Stack is busy
 
