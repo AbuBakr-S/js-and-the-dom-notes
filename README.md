@@ -799,4 +799,32 @@ for (let i = 1; i <= 200; i++){
 }
 ```
 
-document.body.appendChild(myDocFrag);
+`document.body.appendChild(myDocFrag);`
+
+### Reflow and Repaint
+#### Reflow 
+The process of the browser laying out the page. It happens when you first display the DOM (generally after the DOM and CSS have been loaded), and happens again every time something could change the layout. This is a fairly expensive (slow) process.
+
+#### Repaint 
+Happens after reflow as the browser draws the new layout to the screen. This is fairly quick, but you still want to limit how often it happens.
+
+For example, if you **add a CSS class** to an element, the browser often recalculates the layout of the entire page—that's **one reflow and one repaint!**
+
+- Hiding an Element that doesn't change layout (1 Repaint)
+- Show a Hidden Element - (1 Reflow, 1 Repaint)
+- **Hide, Change All, Show** is a good pattern to follow
+
+### The Call Stack
+#### Single Threading
+- JavaScript can "process" one command at a time
+- Run to completion nature
+- All of the code in the function gets executed
+- Function A gets invoked, completes, returns, then Function B gets invoked...
+
+#### The Call Stack
+JavaScript keeps track of what functions are running by using the Call Stack.
+
+
+
+
+
