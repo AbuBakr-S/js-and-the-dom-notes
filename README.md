@@ -880,3 +880,41 @@ setTimeout(function sayHi() {
 - The function is handed off to the Browser where the browser starts a timer for 0 milliseconds
 - Since the timer ends immediately, the `sayHi()` function will move to the **Queue**, and then to the **Call Stack** once the Call Stack has **finished executing any currently-running tasks.**
 
+#### Break Up Long-Running Code
+- What if we added twenty thousand Elements? That's a lot of elements to create, append, and insert into the page!
+- Minimise reflow and repaint.
+- Ensure our app is responsive to user interaction. 
+
+One way to give the user a chance to interact with the page is to break up the adding of the content into chunks. Let's do this with `setTimeout()`:
+
+```
+// Initialise counter to track added paragraphs
+let count = 1
+
+// generateParagraphs() will add 500 (20,000 / 4) paragraphs to the page each time it's invoked. 
+function generateParagraphs() {
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 1; i <= 500; i++) {
+        const newElement = document.createElement('p');
+        newElement.textContent = 'This is paragraph number ' + count;
+        count = count + 1;
+
+        fragment.appendChild(newElement);
+    }
+
+    // Append 500 elements to the body at a time
+    document.body.appendChild(fragment);
+
+    // If there less than 20,000 elements, then it setTimeout() will be used to call the generateParagraphs() function.
+    if (count < 20000) {
+        setTimeout(generateParagraphs, 0);
+    }
+}
+
+generateParagraphs();
+```
+
+If you try running this code on a page, you **can still interact with the page while the code is running**. It **doesn't lock up or freeze the page**. And it doesn't lock up or freeze because of the setTimeout() calls.
+
+
